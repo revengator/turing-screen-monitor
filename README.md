@@ -1,5 +1,10 @@
 # turing-screen-monitor
 
+[![crates.io](https://img.shields.io/crates/v/turing-screen-monitor.svg)](https://crates.io/crates/turing-screen-monitor)
+[![Downloads](https://img.shields.io/crates/d/turing-screen-monitor.svg)](https://crates.io/crates/turing-screen-monitor)
+[![GitHub release](https://img.shields.io/github/v/release/revengator/turing-screen-monitor)](https://github.com/revengator/turing-screen-monitor/releases/latest)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/License-GPL--3.0--or--later-blue.svg)](LICENSE)
+
 A Linux system monitor for **Turing revision A 3.5-inch USB displays**, rendered
 at 480 × 320 in landscape. Implemented in Rust; Python is used only for development
 checks and profiling.
@@ -70,6 +75,10 @@ Install the published release from [crates.io](https://crates.io/crates/turing-s
 ```bash
 cargo install turing-screen-monitor --locked
 ```
+
+A prebuilt static binary for Linux x86_64 (no Rust toolchain needed) is attached to
+each [GitHub release](https://github.com/revengator/turing-screen-monitor/releases/latest),
+with its SHA-256 checksum.
 
 Alternatively, a Cargo installation from this checkout can remain entirely inside
 the repository:
