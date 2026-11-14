@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$root"
+export CARGO_HOME="$root/.work/cargo"
+export RUSTUP_HOME="$root/.work/rustup"
+export TMPDIR="$root/.work/tmp"
+export XDG_CACHE_HOME="$root/.work/cache"
+export RUSTUP_NO_MODIFY_PATH=1
+mkdir -p "$TMPDIR" "$XDG_CACHE_HOME"
+if ! command -v cc >/dev/null; then
+    echo 'A C linker is required. No software will be installed on the host.' >&2
+    exit 1
+fi
+if [[ ! -x "$CARGO_HOME/bin/rustup" ]]; then
+    case "$(uname -sm)" in
+        'Linux x86_64') platform=x86_64-unknown-linux-gnu ;;
+        'Linux aarch64') platform=aarch64-unknown-linux-gnu ;;
+        *) echo 'This local installer supports Linux x86_64 and aarch64.' >&2; exit 1 ;;
+    esac
+    curl -4 --proto '=https' --tlsv1.2 -fL --range 0- --connect-timeout 15 --max-time 180 \
+        "https://static.rust-lang.org/rustup/dist/$platform/rustup-init" -o "$TMPDIR/rustup-init"
+    chmod +x "$TMPDIR/rustup-init"
+    "$TMPDIR/rustup-init" -y --no-modify-path --profile minimal --default-toolchain none
+fi
+# Install explicitly rather than relying on rustup's automatic installation.
+channel="$(sed -n 's/^channel = "\(.*\)"/\1/p' rust-toolchain.toml)"
+"$CARGO_HOME/bin/rustup" toolchain install "$channel" --profile minimal --component rustfmt --component clippy

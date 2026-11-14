@@ -1,0 +1,28 @@
+[package]
+name = "turing-screen-monitor"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+license = "GPL-3.0-or-later"
+description = "A lightweight Linux system monitor for Turing 3.5-inch USB screens"
+repository = "https://github.com/revengator/turing-screen-monitor"
+readme = "README.md"
+keywords = ["turing", "monitor", "linux", "usb"]
+categories = ["command-line-utilities", "hardware-support"]
+include = [
+    "/Cargo.toml", "/Cargo.lock", "/rust-toolchain.toml", "/LICENSE", "/README.md",
+    "/NOTICE", "/CHANGELOG.md",
+    "/src/**", "/contrib/systemd/*.service", "/docs/**", "/tools/**", "/tests/**",
+    "/assets/panel-preview.png",
+]
+
+[dependencies]
+ctrlc = { version = "3.5", features = ["termination"] }
+font8x8 = "0.3"
+libc = "0.2"
+png = "0.18"
+serialport = { version = "4.8", default-features = false }
+
+[profile.release]
+lto = "thin"
+strip = true

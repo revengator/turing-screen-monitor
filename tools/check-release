@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+root="$(cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$root"
+if [[ "$EUID" -eq 0 ]]; then
+    echo 'Run development checks as your ordinary user, not root.' >&2
+    exit 1
+fi
+if [[ $# -eq 1 && "$1" == "--allow-dirty" ]]; then
+    :
+elif [[ $# -ne 0 ]]; then
+    echo 'Usage: bash tools/check-release [--allow-dirty]' >&2
+    exit 2
+fi
+bash tools/cargo-local fmt --check
+bash tools/cargo-local clippy --locked --all-targets -- -D warnings
+bash tools/cargo-local test --locked
+bash tools/cargo-local build --release --locked
+for check in serial_smoke recovery_test service_test profile_test; do
+    python3 -B "tests/$check.py"
+done
+bash tools/cargo-local package --locked "$@"
+python3 -B tools/check-package.py

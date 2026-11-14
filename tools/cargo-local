@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$root"
+export CARGO_HOME="$root/.work/cargo"
+export RUSTUP_HOME="$root/.work/rustup"
+export CARGO_TARGET_DIR="$root/.work/target"
+export TMPDIR="$root/.work/tmp"
+export XDG_CACHE_HOME="$root/.work/cache"
+export RUSTUP_NO_MODIFY_PATH=1
+mkdir -p "$TMPDIR" "$XDG_CACHE_HOME"
+export PATH="$CARGO_HOME/bin:$PATH"
+if [[ ! -x "$CARGO_HOME/bin/rustup" ]]; then
+    echo 'The local compiler is missing. Run: bash tools/bootstrap-rust' >&2
+    exit 1
+fi
+exec "$CARGO_HOME/bin/cargo" "$@"
