@@ -65,7 +65,14 @@ groups and udev rules are never changed automatically.
 
 ## Install and optional startup
 
-Cargo installation can remain entirely inside the repository:
+Install the published release from [crates.io](https://crates.io/crates/turing-screen-monitor):
+
+```bash
+cargo install turing-screen-monitor --locked
+```
+
+Alternatively, a Cargo installation from this checkout can remain entirely inside
+the repository:
 
 ```bash
 bash tools/cargo-local install --path . --locked --root "$PWD/.work/install"
@@ -77,8 +84,7 @@ boot startup and access to root-only RAPL counters. It uses a stable, root-owned
 executable outside `.work/`. Cargo installation itself never activates a service.
 
 See [installation, USB access, updates, removal and troubleshooting](docs/installation.md)
-before installing. A first public crates.io release is being prepared; it has
-not been published.
+before installing.
 
 ## Development and release checks
 

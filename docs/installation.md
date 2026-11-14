@@ -16,14 +16,13 @@ toolchain and an existing C linker. Running an already compiled executable does
 not require Rust. Reinstall with `--force` after source changes. Removing
 `.work/` removes this installation together with the development tools.
 
-Once version 0.1.0 is published, install from crates.io with:
+To install the published release from crates.io instead:
 
 ```bash
 cargo install turing-screen-monitor --locked
 ```
 
-The source installation above is available before publication. Both methods
-compile the executable and require an existing C linker. Use `--version` to
+Both methods compile the executable and require an existing C linker. Use `--version` to
 check the installed binary and `--preview PATH --demo` for a sensor-free preview.
 
 ## Service management included in the executable

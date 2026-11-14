@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — Unreleased
+## 0.1.0 — 2026-11-14
 
 - Add Linux monitoring for revision A 3.5-inch USB displays.
 - Display CPU, NVIDIA GPU, RAM, root filesystem usage and uptime with visual levels.
